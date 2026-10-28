@@ -2,12 +2,17 @@ package com.example.self_service_s_i_m_registration_system.controller;
 
 import com.example.self_service_s_i_m_registration_system.model.SimRegistration;
 import com.example.self_service_s_i_m_registration_system.service.SimRegistrationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/sim-registrations")
@@ -94,5 +99,30 @@ public class SimRegistrationController {
         } else {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/stats/by-status")
+    public List<Object[]> getStatsByStatus() {
+        return simRegistrationService.getStatsByStatus();
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(@RequestParam UUID registrationAgentId, @RequestParam String date) {
+        java.time.LocalDate localDate = java.time.LocalDate.parse(date);
+        String message = simRegistrationService.cancelDay(registrationAgentId, localDate);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public Page<SimRegistration> getPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "registrationDate,desc") String sort) {
+        String[] sortParts = sort.split(",");
+        String property = sortParts[0];
+        Sort.Direction direction = (sortParts.length > 1 && sortParts[1].equalsIgnoreCase("desc"))
+                ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, property));
+        return simRegistrationService.getPage(pageable);
     }
 }

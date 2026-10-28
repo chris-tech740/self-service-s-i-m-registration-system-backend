@@ -3,10 +3,14 @@ package com.example.self_service_s_i_m_registration_system.service;
 import com.example.self_service_s_i_m_registration_system.model.SimRegistration;
 import com.example.self_service_s_i_m_registration_system.repository.SimRegistrationRepository;
 import com.example.self_service_s_i_m_registration_system.repository.VerifiedDocumentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 public class SimRegistrationService {
@@ -107,5 +111,24 @@ public class SimRegistrationService {
 
     public List<SimRegistration> getBetween(java.time.LocalDate start, java.time.LocalDate end) {
         return simRegistrationRepository.findByRegistrationDateBetweenOrderByRegistrationDateAsc(start, end);
+    }
+
+    public List<Object[]> getStatsByStatus() {
+        return simRegistrationRepository.countByStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID registrationAgentId, java.time.LocalDate date) {
+        int count = simRegistrationRepository.cancelDayRegistrations(
+                registrationAgentId,
+                date,
+                com.example.self_service_s_i_m_registration_system.model.RegistrationStatus.REJECTED,
+                com.example.self_service_s_i_m_registration_system.model.RegistrationStatus.APPROVED
+        );
+        return count + " sim registrations cancelled";
+    }
+
+    public Page<SimRegistration> getPage(Pageable pageable) {
+        return simRegistrationRepository.findAll(pageable);
     }
 }
