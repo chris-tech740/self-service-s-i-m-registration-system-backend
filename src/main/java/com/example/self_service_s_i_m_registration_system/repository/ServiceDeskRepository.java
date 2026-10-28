@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface ServiceDeskRepository extends JpaRepository<ServiceDesk, UUID> {
     @Query("SELECT d FROM ServiceDesk d WHERE NOT EXISTS (SELECT r FROM RegistrationAgent r WHERE r.serviceDesk = d) ORDER BY d.deskNumber ASC")
     List<ServiceDesk> findFreeServiceDesks();
+
+    java.util.Optional<ServiceDesk> findByDeskNumber(int deskNumber);
 }

@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface SimRegistrationRepository extends JpaRepository<SimRegistration, UUID> {
     List<SimRegistration> findByStatusOrderByRegistrationDateAsc(RegistrationStatus status);
     List<SimRegistration> findByRegistrationDateBetweenOrderByRegistrationDateAsc(LocalDate start, LocalDate end);
+    boolean existsByAgentAndRegistrationDateAndStatusNot(com.example.self_service_s_i_m_registration_system.model.RegistrationAgent agent, LocalDate registrationDate, RegistrationStatus status);
 }

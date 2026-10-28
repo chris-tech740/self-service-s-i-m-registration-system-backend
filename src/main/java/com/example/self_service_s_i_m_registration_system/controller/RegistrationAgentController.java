@@ -64,4 +64,28 @@ public class RegistrationAgentController {
     public List<RegistrationAgent> getBySimType(@RequestParam String name) {
         return registrationAgentService.getBySimType(name);
     }
+
+    @PutMapping("/{registrationAgentId}/sim-types/{simTypeId}")
+    public ResponseEntity<String> addSimType(@PathVariable UUID registrationAgentId, @PathVariable UUID simTypeId) {
+        String message = registrationAgentService.addSimType(registrationAgentId, simTypeId);
+        if (message.equals("Sim type added to the registration agent")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals("The registration agent already has that sim type")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{registrationAgentId}/service-desk")
+    public ResponseEntity<String> changeServiceDesk(@PathVariable UUID registrationAgentId, @RequestParam int deskNumber) {
+        String message = registrationAgentService.changeServiceDesk(registrationAgentId, deskNumber);
+        if (message.equals("Service desk changed successfully")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals("That service desk is taken by another registration agent")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
 }
