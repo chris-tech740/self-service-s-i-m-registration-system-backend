@@ -64,10 +64,13 @@ public class SimRegistrationController {
         String message = simRegistrationService.delete(id);
         if (message.equals("Sim registration deleted successfully")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
+        } else if (message.equals("That sim registration has verified documents, delete them first")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
 
     @GetMapping("/by-status")
     public List<SimRegistration> getByStatus(@RequestParam com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {

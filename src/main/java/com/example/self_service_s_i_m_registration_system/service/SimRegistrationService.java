@@ -2,6 +2,7 @@ package com.example.self_service_s_i_m_registration_system.service;
 
 import com.example.self_service_s_i_m_registration_system.model.SimRegistration;
 import com.example.self_service_s_i_m_registration_system.repository.SimRegistrationRepository;
+import com.example.self_service_s_i_m_registration_system.repository.VerifiedDocumentRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,14 @@ import java.util.UUID;
 public class SimRegistrationService {
 
     private final SimRegistrationRepository simRegistrationRepository;
+    private final VerifiedDocumentRepository verifiedDocumentRepository;
 
-    public SimRegistrationService(SimRegistrationRepository simRegistrationRepository) {
+    public SimRegistrationService(SimRegistrationRepository simRegistrationRepository,
+                                  VerifiedDocumentRepository verifiedDocumentRepository) {
         this.simRegistrationRepository = simRegistrationRepository;
+        this.verifiedDocumentRepository = verifiedDocumentRepository;
     }
+
 
     public String save(SimRegistration simRegistration) {
         if (simRegistration.getRegistrationDate() != null && simRegistration.getRegistrationDate().isBefore(java.time.LocalDate.now())) {
@@ -84,13 +89,17 @@ public class SimRegistrationService {
 
 
     public String delete(UUID id) {
-        if (simRegistrationRepository.existsById(id)) {
-            simRegistrationRepository.deleteById(id);
-            return "Sim registration deleted successfully";
-        } else {
+        Optional<SimRegistration> existing = simRegistrationRepository.findById(id);
+        if (existing.isEmpty()) {
             return "The sim registration with that id does not exist";
         }
+        if (verifiedDocumentRepository.existsBySimRegistration(existing.get())) {
+            return "That sim registration has verified documents, delete them first";
+        }
+        simRegistrationRepository.deleteById(id);
+        return "Sim registration deleted successfully";
     }
+
 
     public List<SimRegistration> getByStatus(com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {
         return simRegistrationRepository.findByStatusOrderByRegistrationDateAsc(status);
