@@ -57,4 +57,8 @@ public class RegistrationAgentService {
             return "The registration agent with that id does not exist";
         }
     }
+
+    public List<RegistrationAgent> getBySimType(String name) {
+        return registrationAgentRepository.findBySimTypeName(name);
+    }
 }

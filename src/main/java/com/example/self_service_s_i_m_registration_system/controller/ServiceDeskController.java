@@ -59,4 +59,9 @@ public class ServiceDeskController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/free")
+    public List<ServiceDesk> getFree() {
+        return serviceDeskService.getFreeServiceDesks();
+    }
 }

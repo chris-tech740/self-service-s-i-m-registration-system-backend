@@ -59,4 +59,9 @@ public class SimTypeController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/unused")
+    public List<SimType> getUnused() {
+        return simTypeService.getUnused();
+    }
 }

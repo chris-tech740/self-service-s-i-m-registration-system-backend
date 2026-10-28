@@ -59,4 +59,9 @@ public class RegistrationAgentController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/by-sim-type")
+    public List<RegistrationAgent> getBySimType(@RequestParam String name) {
+        return registrationAgentService.getBySimType(name);
+    }
 }

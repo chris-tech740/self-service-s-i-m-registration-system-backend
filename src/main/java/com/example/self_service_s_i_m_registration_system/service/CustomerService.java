@@ -2,6 +2,7 @@ package com.example.self_service_s_i_m_registration_system.service;
 
 import com.example.self_service_s_i_m_registration_system.model.Customer;
 import com.example.self_service_s_i_m_registration_system.repository.CustomerRepository;
+import com.example.self_service_s_i_m_registration_system.repository.RegistrationAgentRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,13 @@ import java.util.UUID;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final RegistrationAgentRepository registrationAgentRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, RegistrationAgentRepository registrationAgentRepository) {
         this.customerRepository = customerRepository;
+        this.registrationAgentRepository = registrationAgentRepository;
     }
+
 
     public String save(Customer customer) {
         customerRepository.save(customer);
@@ -56,5 +60,12 @@ public class CustomerService {
 
     public List<Customer> getByLastName(String lastName) {
         return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public Optional<List<Customer>> getCustomersOfRegistrationAgent(UUID registrationAgentId) {
+        if (!registrationAgentRepository.existsById(registrationAgentId)) {
+            return Optional.empty();
+        }
+        return Optional.of(customerRepository.findByRegistrationAgentId(registrationAgentId));
     }
 }

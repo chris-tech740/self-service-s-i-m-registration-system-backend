@@ -49,4 +49,8 @@ public class SimTypeService {
             return "The sim type with that id does not exist";
         }
     }
+
+    public List<SimType> getUnused() {
+        return simTypeRepository.findUnusedSimTypes();
+    }
 }

@@ -64,4 +64,14 @@ public class CustomerController {
     public List<Customer> getByLastName(@RequestParam String lastName) {
         return customerService.getByLastName(lastName);
     }
+
+    @GetMapping("/of-registration-agent/{registrationAgentId}")
+    public ResponseEntity<Object> getCustomersOfRegistrationAgent(@PathVariable UUID registrationAgentId) {
+        Optional<List<Customer>> customers = customerService.getCustomersOfRegistrationAgent(registrationAgentId);
+        if (customers.isPresent()) {
+            return new ResponseEntity<>(customers.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("The registration agent with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+    }
 }

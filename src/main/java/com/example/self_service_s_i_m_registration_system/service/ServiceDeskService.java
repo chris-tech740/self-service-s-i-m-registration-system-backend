@@ -50,4 +50,8 @@ public class ServiceDeskService {
             return "The service desk with that id does not exist";
         }
     }
+
+    public List<ServiceDesk> getFreeServiceDesks() {
+        return serviceDeskRepository.findFreeServiceDesks();
+    }
 }
