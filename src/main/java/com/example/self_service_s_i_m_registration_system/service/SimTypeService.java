@@ -17,6 +17,15 @@ public class SimTypeService {
     }
 
     public String save(SimType simType) {
+        if (simType == null) {
+            return "Sim type data cannot be null";
+        }
+        if (simType.getName() == null || simType.getName().trim().isEmpty()) {
+            return "Sim type name is required";
+        }
+        if (simTypeRepository.existsByNameIgnoreCase(simType.getName())) {
+            return "Sim type with that name already exists";
+        }
         simTypeRepository.save(simType);
         return "Sim type saved successfully";
     }
@@ -32,8 +41,16 @@ public class SimTypeService {
     public String update(UUID id, SimType simType) {
         Optional<SimType> existing = simTypeRepository.findById(id);
         if (existing.isPresent()) {
+            if (simType == null) {
+                return "Sim type data cannot be null";
+            }
             SimType found = existing.get();
-            found.setName(simType.getName());
+            if (simType.getName() != null && !simType.getName().trim().isEmpty()) {
+                if (!simType.getName().equalsIgnoreCase(found.getName()) && simTypeRepository.existsByNameIgnoreCase(simType.getName())) {
+                    return "Sim type with that name already exists";
+                }
+                found.setName(simType.getName());
+            }
             simTypeRepository.save(found);
             return "Sim type updated successfully";
         } else {

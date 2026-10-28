@@ -29,6 +29,21 @@ public class RegistrationAgentService {
 
 
     public String save(RegistrationAgent registrationAgent) {
+        if (registrationAgent == null) {
+            return "Registration agent data cannot be null";
+        }
+        if (registrationAgent.getStaffNumber() == null || registrationAgent.getStaffNumber().trim().isEmpty()) {
+            return "Agent staffNumber is required";
+        }
+        if (registrationAgent.getFirstName() == null || registrationAgent.getFirstName().trim().isEmpty()) {
+            return "Agent firstName is required";
+        }
+        if (registrationAgent.getLastName() == null || registrationAgent.getLastName().trim().isEmpty()) {
+            return "Agent lastName is required";
+        }
+        if (registrationAgentRepository.existsByStaffNumber(registrationAgent.getStaffNumber())) {
+            return "Agent with that staffNumber already exists";
+        }
         registrationAgentRepository.save(registrationAgent);
         return "Registration agent saved successfully";
     }
@@ -44,10 +59,22 @@ public class RegistrationAgentService {
     public String update(UUID id, RegistrationAgent registrationAgent) {
         Optional<RegistrationAgent> existing = registrationAgentRepository.findById(id);
         if (existing.isPresent()) {
+            if (registrationAgent == null) {
+                return "Registration agent data cannot be null";
+            }
             RegistrationAgent found = existing.get();
-            found.setFirstName(registrationAgent.getFirstName());
-            found.setLastName(registrationAgent.getLastName());
-            found.setStaffNumber(registrationAgent.getStaffNumber());
+            if (registrationAgent.getStaffNumber() != null && !registrationAgent.getStaffNumber().trim().isEmpty()) {
+                if (!registrationAgent.getStaffNumber().equals(found.getStaffNumber()) && registrationAgentRepository.existsByStaffNumber(registrationAgent.getStaffNumber())) {
+                    return "Agent with that staffNumber already exists";
+                }
+                found.setStaffNumber(registrationAgent.getStaffNumber());
+            }
+            if (registrationAgent.getFirstName() != null && !registrationAgent.getFirstName().trim().isEmpty()) {
+                found.setFirstName(registrationAgent.getFirstName());
+            }
+            if (registrationAgent.getLastName() != null && !registrationAgent.getLastName().trim().isEmpty()) {
+                found.setLastName(registrationAgent.getLastName());
+            }
             if (registrationAgent.getServiceDesk() != null) {
                 found.setServiceDesk(registrationAgent.getServiceDesk());
             }

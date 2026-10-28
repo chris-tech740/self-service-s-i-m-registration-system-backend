@@ -22,7 +22,13 @@ public class SimTypeController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody SimType simType) {
         String message = simTypeService.save(simType);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        if ("Sim type saved successfully".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else if ("Sim type with that name already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
@@ -43,10 +49,14 @@ public class SimTypeController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody SimType simType) {
         String message = simTypeService.update(id, simType);
-        if (message.equals("Sim type updated successfully")) {
+        if ("Sim type updated successfully".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
+        } else if ("The sim type with that id does not exist".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else if ("Sim type with that name already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
 

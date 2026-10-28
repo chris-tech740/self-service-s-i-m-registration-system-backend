@@ -19,11 +19,15 @@ public class MidtermRequirementsTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private com.example.self_service_s_i_m_registration_system.repository.CustomerRepository customerRepository;
+
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        customerRepository.findByNationalId("1199000012345678").ifPresent(customerRepository::delete);
     }
 
 
@@ -162,5 +166,45 @@ public class MidtermRequirementsTest {
                 .andExpect(jsonPath("$.content", hasSize(5)))
                 .andExpect(jsonPath("$.totalElements").value(10))
                 .andExpect(jsonPath("$.totalPages").value(2));
+    }
+
+    @Test
+    void testValidation_CustomerMissingNationalId() throws Exception {
+        String body = "{\"firstName\": \"Test\", \"lastName\": \"User\"}";
+        mockMvc.perform(post("/api/customers/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Customer nationalId is required"));
+    }
+
+    @Test
+    void testValidation_CustomerDuplicateNationalId() throws Exception {
+        String body = "{\"firstName\": \"Test\", \"lastName\": \"User\", \"nationalId\": \"1199880012345678\"}";
+        mockMvc.perform(post("/api/customers/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isConflict())
+                .andExpect(content().string("Customer with that nationalId already exists"));
+    }
+
+    @Test
+    void testValidation_ServiceDeskInvalidNumber() throws Exception {
+        String body = "{\"deskNumber\": 0, \"name\": \"Desk Zero\"}";
+        mockMvc.perform(post("/api/service-desks/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Service desk number must be greater than zero"));
+    }
+
+    @Test
+    void testValidation_SimTypeBlankName() throws Exception {
+        String body = "{\"name\": \"\"}";
+        mockMvc.perform(post("/api/sim-types/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Sim type name is required"));
     }
 }

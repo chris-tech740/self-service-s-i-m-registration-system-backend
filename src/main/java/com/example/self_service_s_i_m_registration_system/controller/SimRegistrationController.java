@@ -60,10 +60,12 @@ public class SimRegistrationController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody SimRegistration simRegistration) {
         String message = simRegistrationService.update(id, simRegistration);
-        if (message.equals("Sim registration updated successfully")) {
+        if ("Sim registration updated successfully".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
+        } else if ("The sim registration with that id does not exist".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
 

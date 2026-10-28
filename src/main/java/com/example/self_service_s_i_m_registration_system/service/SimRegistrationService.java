@@ -26,8 +26,14 @@ public class SimRegistrationService {
     }
 
     public String save(SimRegistration simRegistration) {
+        if (simRegistration == null) {
+            return "Sim registration data cannot be null";
+        }
         if (simRegistration.getRegistrationDate() != null && simRegistration.getRegistrationDate().isBefore(LocalDate.now())) {
             return "Sim registration date cannot be in the past";
+        }
+        if (simRegistration.getSimNumber() == null || simRegistration.getSimNumber().trim().isEmpty()) {
+            return "Sim number is required";
         }
         if (simRegistration.getAgent() != null && simRegistration.getAgent().getId() != null) {
             if (simRegistrationRepository.existsByAgentAndRegistrationDateAndStatusNot(simRegistration.getAgent(), simRegistration.getRegistrationDate(), RegistrationStatus.REJECTED)) {
@@ -50,9 +56,19 @@ public class SimRegistrationService {
     public String update(UUID id, SimRegistration simRegistration) {
         Optional<SimRegistration> existing = simRegistrationRepository.findById(id);
         if (existing.isPresent()) {
+            if (simRegistration == null) {
+                return "Sim registration data cannot be null";
+            }
+            if (simRegistration.getRegistrationDate() != null && simRegistration.getRegistrationDate().isBefore(LocalDate.now())) {
+                return "Sim registration date cannot be in the past";
+            }
             SimRegistration found = existing.get();
-            found.setRegistrationDate(simRegistration.getRegistrationDate());
-            found.setSimNumber(simRegistration.getSimNumber());
+            if (simRegistration.getRegistrationDate() != null) {
+                found.setRegistrationDate(simRegistration.getRegistrationDate());
+            }
+            if (simRegistration.getSimNumber() != null && !simRegistration.getSimNumber().trim().isEmpty()) {
+                found.setSimNumber(simRegistration.getSimNumber());
+            }
             if (simRegistration.getCustomer() != null) {
                 found.setCustomer(simRegistration.getCustomer());
             }

@@ -21,6 +21,21 @@ public class CustomerService {
 
 
     public String save(Customer customer) {
+        if (customer == null) {
+            return "Customer data cannot be null";
+        }
+        if (customer.getNationalId() == null || customer.getNationalId().trim().isEmpty()) {
+            return "Customer nationalId is required";
+        }
+        if (customer.getFirstName() == null || customer.getFirstName().trim().isEmpty()) {
+            return "Customer firstName is required";
+        }
+        if (customer.getLastName() == null || customer.getLastName().trim().isEmpty()) {
+            return "Customer lastName is required";
+        }
+        if (customerRepository.existsByNationalId(customer.getNationalId())) {
+            return "Customer with that nationalId already exists";
+        }
         customerRepository.save(customer);
         return "Customer saved successfully";
     }
@@ -36,12 +51,28 @@ public class CustomerService {
     public String update(UUID id, Customer customer) {
         Optional<Customer> existing = customerRepository.findById(id);
         if (existing.isPresent()) {
+            if (customer == null) {
+                return "Customer data cannot be null";
+            }
             Customer found = existing.get();
-            found.setFirstName(customer.getFirstName());
-            found.setLastName(customer.getLastName());
-            found.setNationalId(customer.getNationalId());
-            found.setPhone(customer.getPhone());
-            found.setEmail(customer.getEmail());
+            if (customer.getNationalId() != null && !customer.getNationalId().trim().isEmpty()) {
+                if (!customer.getNationalId().equals(found.getNationalId()) && customerRepository.existsByNationalId(customer.getNationalId())) {
+                    return "Customer with that nationalId already exists";
+                }
+                found.setNationalId(customer.getNationalId());
+            }
+            if (customer.getFirstName() != null && !customer.getFirstName().trim().isEmpty()) {
+                found.setFirstName(customer.getFirstName());
+            }
+            if (customer.getLastName() != null && !customer.getLastName().trim().isEmpty()) {
+                found.setLastName(customer.getLastName());
+            }
+            if (customer.getPhone() != null) {
+                found.setPhone(customer.getPhone());
+            }
+            if (customer.getEmail() != null) {
+                found.setEmail(customer.getEmail());
+            }
             customerRepository.save(found);
             return "Customer updated successfully";
         } else {

@@ -17,6 +17,18 @@ public class ServiceDeskService {
     }
 
     public String save(ServiceDesk serviceDesk) {
+        if (serviceDesk == null) {
+            return "Service desk data cannot be null";
+        }
+        if (serviceDesk.getDeskNumber() <= 0) {
+            return "Service desk number must be greater than zero";
+        }
+        if (serviceDesk.getName() == null || serviceDesk.getName().trim().isEmpty()) {
+            return "Service desk name is required";
+        }
+        if (serviceDeskRepository.existsByDeskNumber(serviceDesk.getDeskNumber())) {
+            return "Service desk with that deskNumber already exists";
+        }
         serviceDeskRepository.save(serviceDesk);
         return "Service desk saved successfully";
     }
@@ -32,9 +44,19 @@ public class ServiceDeskService {
     public String update(UUID id, ServiceDesk serviceDesk) {
         Optional<ServiceDesk> existing = serviceDeskRepository.findById(id);
         if (existing.isPresent()) {
+            if (serviceDesk == null) {
+                return "Service desk data cannot be null";
+            }
             ServiceDesk found = existing.get();
-            found.setDeskNumber(serviceDesk.getDeskNumber());
-            found.setName(serviceDesk.getName());
+            if (serviceDesk.getDeskNumber() > 0) {
+                if (serviceDesk.getDeskNumber() != found.getDeskNumber() && serviceDeskRepository.existsByDeskNumber(serviceDesk.getDeskNumber())) {
+                    return "Service desk with that deskNumber already exists";
+                }
+                found.setDeskNumber(serviceDesk.getDeskNumber());
+            }
+            if (serviceDesk.getName() != null && !serviceDesk.getName().trim().isEmpty()) {
+                found.setName(serviceDesk.getName());
+            }
             serviceDeskRepository.save(found);
             return "Service desk updated successfully";
         } else {

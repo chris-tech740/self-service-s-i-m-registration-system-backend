@@ -22,7 +22,13 @@ public class CustomerController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Customer customer) {
         String message = customerService.save(customer);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        if ("Customer saved successfully".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else if ("Customer with that nationalId already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
@@ -43,10 +49,14 @@ public class CustomerController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody Customer customer) {
         String message = customerService.update(id, customer);
-        if (message.equals("Customer updated successfully")) {
+        if ("Customer updated successfully".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
+        } else if ("The customer with that id does not exist".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else if ("Customer with that nationalId already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
 

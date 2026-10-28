@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface SimTypeRepository extends JpaRepository<SimType, UUID> {
     @Query("SELECT s FROM SimType s WHERE s.agents IS EMPTY")
     List<SimType> findUnusedSimTypes();
+
+    boolean existsByNameIgnoreCase(String name);
 }

@@ -22,7 +22,13 @@ public class RegistrationAgentController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody RegistrationAgent registrationAgent) {
         String message = registrationAgentService.save(registrationAgent);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        if ("Registration agent saved successfully".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else if ("Agent with that staffNumber already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
@@ -43,10 +49,14 @@ public class RegistrationAgentController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody RegistrationAgent registrationAgent) {
         String message = registrationAgentService.update(id, registrationAgent);
-        if (message.equals("Registration agent updated successfully")) {
+        if ("Registration agent updated successfully".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
+        } else if ("The registration agent with that id does not exist".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else if ("Agent with that staffNumber already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
 

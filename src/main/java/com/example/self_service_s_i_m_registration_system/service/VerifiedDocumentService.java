@@ -24,6 +24,9 @@ public class VerifiedDocumentService {
     }
 
     public String save(UUID simRegistrationId, VerifiedDocument verifiedDocument) {
+        if (verifiedDocument == null) {
+            return "Verified document data cannot be null";
+        }
         Optional<SimRegistration> regOpt = simRegistrationRepository.findById(simRegistrationId);
         if (regOpt.isEmpty()) {
             return "The sim registration with that id does not exist";
@@ -31,6 +34,12 @@ public class VerifiedDocumentService {
         SimRegistration simRegistration = regOpt.get();
         if (simRegistration.getStatus() != RegistrationStatus.APPROVED) {
             return "Verified documents are only for APPROVED sim registrations";
+        }
+        if (verifiedDocument.getDocumentType() == null || verifiedDocument.getDocumentType().trim().isEmpty()) {
+            return "Document type is required";
+        }
+        if (verifiedDocument.getPages() <= 0) {
+            return "Number of pages must be at least 1";
         }
         verifiedDocument.setVerifiedDate(LocalDate.now());
         verifiedDocument.setSimRegistration(simRegistration);

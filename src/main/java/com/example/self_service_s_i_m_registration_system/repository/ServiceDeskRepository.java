@@ -13,4 +13,6 @@ public interface ServiceDeskRepository extends JpaRepository<ServiceDesk, UUID> 
     List<ServiceDesk> findFreeServiceDesks();
 
     Optional<ServiceDesk> findByDeskNumber(int deskNumber);
+
+    boolean existsByDeskNumber(int deskNumber);
 }

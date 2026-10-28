@@ -22,7 +22,13 @@ public class ServiceDeskController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody ServiceDesk serviceDesk) {
         String message = serviceDeskService.save(serviceDesk);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        if ("Service desk saved successfully".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else if ("Service desk with that deskNumber already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/all")
@@ -43,10 +49,14 @@ public class ServiceDeskController {
     @PutMapping("/update/{id}")
     public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody ServiceDesk serviceDesk) {
         String message = serviceDeskService.update(id, serviceDesk);
-        if (message.equals("Service desk updated successfully")) {
+        if ("Service desk updated successfully".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.OK);
-        } else {
+        } else if ("The service desk with that id does not exist".equals(message)) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        } else if ("Service desk with that deskNumber already exists".equals(message)) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
     }
 

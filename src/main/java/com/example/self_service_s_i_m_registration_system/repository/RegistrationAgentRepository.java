@@ -14,4 +14,8 @@ public interface RegistrationAgentRepository extends JpaRepository<RegistrationA
     List<RegistrationAgent> findBySimTypeName(@Param("name") String name);
 
     boolean existsByServiceDesk(ServiceDesk serviceDesk);
+
+    boolean existsByStaffNumber(String staffNumber);
+
+    java.util.Optional<RegistrationAgent> findByStaffNumber(String staffNumber);
 }

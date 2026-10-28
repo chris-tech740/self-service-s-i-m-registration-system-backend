@@ -12,4 +12,8 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
     @Query("SELECT DISTINCT s.customer FROM SimRegistration s WHERE s.agent.id = :registrationAgentId")
     List<Customer> findByRegistrationAgentId(@Param("registrationAgentId") UUID registrationAgentId);
+
+    boolean existsByNationalId(String nationalId);
+
+    java.util.Optional<Customer> findByNationalId(String nationalId);
 }
