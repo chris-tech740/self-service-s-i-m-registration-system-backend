@@ -1,5 +1,6 @@
 package com.example.self_service_s_i_m_registration_system.controller;
 
+import com.example.self_service_s_i_m_registration_system.model.RegistrationStatus;
 import com.example.self_service_s_i_m_registration_system.model.SimRegistration;
 import com.example.self_service_s_i_m_registration_system.service.SimRegistrationService;
 import org.springframework.data.domain.Page;
@@ -9,9 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 
 @RestController
@@ -78,19 +81,19 @@ public class SimRegistrationController {
 
 
     @GetMapping("/by-status")
-    public List<SimRegistration> getByStatus(@RequestParam com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {
+    public List<SimRegistration> getByStatus(@RequestParam RegistrationStatus status) {
         return simRegistrationService.getByStatus(status);
     }
 
     @GetMapping("/between")
     public List<SimRegistration> getBetween(@RequestParam String start, @RequestParam String end) {
-        java.time.LocalDate startDate = java.time.LocalDate.parse(start);
-        java.time.LocalDate endDate = java.time.LocalDate.parse(end);
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
         return simRegistrationService.getBetween(startDate, endDate);
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<String> updateStatus(@PathVariable UUID id, @RequestParam com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {
+    public ResponseEntity<String> updateStatus(@PathVariable UUID id, @RequestParam RegistrationStatus status) {
         String message = simRegistrationService.updateStatus(id, status);
         if (message.equals("Sim registration status updated successfully")) {
             return new ResponseEntity<>(message, HttpStatus.OK);
@@ -108,10 +111,11 @@ public class SimRegistrationController {
 
     @PatchMapping("/cancel-day")
     public ResponseEntity<String> cancelDay(@RequestParam UUID registrationAgentId, @RequestParam String date) {
-        java.time.LocalDate localDate = java.time.LocalDate.parse(date);
+        LocalDate localDate = LocalDate.parse(date);
         String message = simRegistrationService.cancelDay(registrationAgentId, localDate);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
 
     @GetMapping("/page")
     public Page<SimRegistration> getPage(

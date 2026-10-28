@@ -1,5 +1,6 @@
 package com.example.self_service_s_i_m_registration_system.repository;
 
+import com.example.self_service_s_i_m_registration_system.model.RegistrationAgent;
 import com.example.self_service_s_i_m_registration_system.model.RegistrationStatus;
 import com.example.self_service_s_i_m_registration_system.model.SimRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +12,12 @@ import java.util.List;
 import java.util.UUID;
 
 public interface SimRegistrationRepository extends JpaRepository<SimRegistration, UUID> {
+
     List<SimRegistration> findByStatusOrderByRegistrationDateAsc(RegistrationStatus status);
+
     List<SimRegistration> findByRegistrationDateBetweenOrderByRegistrationDateAsc(LocalDate start, LocalDate end);
-    boolean existsByAgentAndRegistrationDateAndStatusNot(com.example.self_service_s_i_m_registration_system.model.RegistrationAgent agent, LocalDate registrationDate, RegistrationStatus status);
+
+    boolean existsByAgentAndRegistrationDateAndStatusNot(RegistrationAgent agent, LocalDate registrationDate, RegistrationStatus status);
 
     @Query("SELECT r.status, COUNT(r) FROM SimRegistration r GROUP BY r.status")
     List<Object[]> countByStatus();
@@ -26,5 +30,6 @@ public interface SimRegistrationRepository extends JpaRepository<SimRegistration
                                @Param("approvedStatus") RegistrationStatus approvedStatus);
 
     long countByRegistrationDate(LocalDate registrationDate);
+
     long countByStatus(RegistrationStatus status);
 }
