@@ -115,10 +115,10 @@ public class RegistrationAgentService {
         if (agent.getSimTypes() == null) {
             agent.setSimTypes(new ArrayList<>());
         }
-        boolean alreadyHas = agent.getSimTypes().stream()
-                .anyMatch(st -> st.getId().equals(simType.getId()));
-        if (alreadyHas) {
-            return "The registration agent already has that sim type";
+        for (SimType st : agent.getSimTypes()) {
+            if (st.getId().equals(simType.getId())) {
+                return "The registration agent already has that sim type";
+            }
         }
         agent.getSimTypes().add(simType);
         registrationAgentRepository.save(agent);

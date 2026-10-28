@@ -142,7 +142,7 @@ Run Maven compiler via the provided wrapper:
 ```
 
 ### 3. Run the Automated Test Suite
-Execute the 18 automated integration tests covering all requirements:
+Execute the 22 automated integration tests covering all requirements and input validations:
 ```bash
 ./mvnw test
 ```
@@ -156,7 +156,18 @@ The application will listen on `http://localhost:8080`.
 
 ---
 
-## 6. Postman Collection
+## 6. Input Validation & Business Rules
+The system enforces comprehensive validation rules across all layers:
+- **Customer:** Validates non-null/non-blank `nationalId`, `firstName`, and `lastName`. Enforces uniqueness of `nationalId` (returns `409 CONFLICT`).
+- **RegistrationAgent:** Validates `staffNumber`, `firstName`, and `lastName`. Enforces uniqueness of `staffNumber` (returns `409 CONFLICT`).
+- **ServiceDesk:** Validates `deskNumber > 0` and non-blank `name`. Enforces unique desk numbers (returns `409 CONFLICT`).
+- **SimType:** Validates non-blank `name` and uniqueness (returns `409 CONFLICT`).
+- **SimRegistration:** Rejects past registration dates (`400 BAD REQUEST`), prevents duplicate reviews on the same day (`409 CONFLICT`), and enforces state machine transitions (`SUBMITTED` → `UNDER_REVIEW` → `APPROVED` / `REJECTED`).
+- **VerifiedDocument:** Validates `pages >= 1` and non-blank `documentType`. Enforces that verified documents can only be attached to `APPROVED` registrations (`400 BAD REQUEST`).
+
+---
+
+## 7. Postman Collection
 The collection is included at the root of the project:
 `self-service-s-i-m-registration-system-midterm.postman_collection.json`
 
