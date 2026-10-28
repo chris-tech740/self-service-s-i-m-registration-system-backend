@@ -59,4 +59,16 @@ public class SimRegistrationController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/by-status")
+    public List<SimRegistration> getByStatus(@RequestParam com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {
+        return simRegistrationService.getByStatus(status);
+    }
+
+    @GetMapping("/between")
+    public List<SimRegistration> getBetween(@RequestParam String start, @RequestParam String end) {
+        java.time.LocalDate startDate = java.time.LocalDate.parse(start);
+        java.time.LocalDate endDate = java.time.LocalDate.parse(end);
+        return simRegistrationService.getBetween(startDate, endDate);
+    }
 }

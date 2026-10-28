@@ -57,4 +57,12 @@ public class SimRegistrationService {
             return "The sim registration with that id does not exist";
         }
     }
+
+    public List<SimRegistration> getByStatus(com.example.self_service_s_i_m_registration_system.model.RegistrationStatus status) {
+        return simRegistrationRepository.findByStatusOrderByRegistrationDateAsc(status);
+    }
+
+    public List<SimRegistration> getBetween(java.time.LocalDate start, java.time.LocalDate end) {
+        return simRegistrationRepository.findByRegistrationDateBetweenOrderByRegistrationDateAsc(start, end);
+    }
 }

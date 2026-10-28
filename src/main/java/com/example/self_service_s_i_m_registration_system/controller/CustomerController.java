@@ -59,4 +59,9 @@ public class CustomerController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/by-last-name")
+    public List<Customer> getByLastName(@RequestParam String lastName) {
+        return customerService.getByLastName(lastName);
+    }
 }

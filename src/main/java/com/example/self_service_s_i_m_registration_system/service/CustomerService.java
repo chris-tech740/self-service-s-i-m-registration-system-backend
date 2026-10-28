@@ -53,4 +53,8 @@ public class CustomerService {
             return "The customer with that id does not exist";
         }
     }
+
+    public List<Customer> getByLastName(String lastName) {
+        return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }
