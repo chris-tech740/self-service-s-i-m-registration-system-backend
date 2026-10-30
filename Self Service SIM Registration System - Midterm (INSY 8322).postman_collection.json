@@ -1,0 +1,1192 @@
+{
+  "info": {
+    "_postman_id": "2977c512-e104-4e13-a51a-1f98308f0ba7",
+    "name": "Self Service SIM Registration System - Midterm (INSY 8322)",
+    "description": "Mid-Term Project Practice: Self Service SIM Registration System Backend\nStudent: IMANZI Chris (ID: 27545)\nLecturer: Patrick DUSHIMIMANA\nCourse: INSY 8322 WEB TECHNOLOGY AND INTERNET",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58413205",
+    "_collection_link": "https://go.postman.co/collection/58413205-2977c512-e104-4e13-a51a-1f98308f0ba7?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Part A - CRUD for Five Entities (A2)",
+      "item": [
+        {
+          "name": "A2 - Save SimType",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Corporate\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "save"
+              ]
+            },
+            "description": "Saves a new SimType. Returns 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get All SimTypes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "all"
+              ]
+            },
+            "description": "Returns all SimTypes. Look here to get the UUID of any SimType for subsequent requests."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get SimType By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/f03ef6a3-7166-46db-bf22-6e54144b6f92",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "f03ef6a3-7166-46db-bf22-6e54144b6f92"
+              ]
+            },
+            "description": "Get SimType by ID. Replace with UUID from GET /api/sim-types/all (e.g. 5394a3f5-b049-492f-bd98-5536f16ad5db)."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get SimType By Unknown ID (404 Error)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/00000000-0000-0000-0000-000000000000",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "00000000-0000-0000-0000-000000000000"
+              ]
+            },
+            "description": "Demonstrates 404 Not Found error response for an unknown SimType ID."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Update SimType",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Corporate Plus\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/update/f03ef6a3-7166-46db-bf22-6e54144b6f92",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "update",
+                "f03ef6a3-7166-46db-bf22-6e54144b6f92"
+              ]
+            },
+            "description": "Updates a SimType by ID. Replace with UUID from GET /api/sim-types/all."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Delete SimType",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/delete/f03ef6a3-7166-46db-bf22-6e54144b6f92",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "delete",
+                "f03ef6a3-7166-46db-bf22-6e54144b6f92"
+              ]
+            },
+            "description": "Deletes a SimType by ID. Replace with UUID from GET /api/sim-types/all."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Save ServiceDesk",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"deskNumber\": 2,\n    \"name\": \"Service Desk 2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/service-desks/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-desks",
+                "save"
+              ]
+            },
+            "description": "Saves a new ServiceDesk. Returns 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get All ServiceDesks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-desks/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-desks",
+                "all"
+              ]
+            },
+            "description": "Returns all ServiceDesks. Look here to get service desk UUIDs."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Save RegistrationAgent",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"staffNumber\": \"STAFF001\",\n    \"firstName\": \"Jean\",\n    \"lastName\": \"Bosco\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "save"
+              ]
+            },
+            "description": "Saves a new RegistrationAgent. Returns 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get All RegistrationAgents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "all"
+              ]
+            },
+            "description": "Returns all RegistrationAgents. Look here to get agent UUIDs."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Save Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Aline\",\n    \"lastName\": \"Mukamana\",\n    \"nationalId\": \"1199880012345678\",\n    \"phone\": \"+250788111222\",\n    \"email\": \"aline.mukamana@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "save"
+              ]
+            },
+            "description": "Saves a Customer. Returns 201 Created."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "all"
+              ]
+            },
+            "description": "Returns all Customers. Look here to get customer UUIDs."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Save SimRegistration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"registrationDate\": \"2026-11-20\",\n    \"simNumber\": \"0788100001\",\n    \"customer\": {\n        \"id\": \"04502367-a518-498d-bd23-6c4c622a5afa\"\n    },\n    \"agent\": {\n        \"id\": \"02d6eab6-c7af-47ac-a00f-a32c3d405b8f\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "save"
+              ]
+            },
+            "description": "Saves a SimRegistration with linked customer and agent. Replace customer ID from GET /api/customers/all and agent ID from GET /api/registration-agents/all."
+          },
+          "response": []
+        },
+        {
+          "name": "A2 - Get All SimRegistrations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "all"
+              ]
+            },
+            "description": "Returns all SimRegistrations. Look here to get registration UUIDs."
+          },
+          "response": []
+        },
+        {
+          "name": "ServiceDesk Free",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/service-desks/free",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "service-desks",
+                "free"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Part B - Derived Queries (B1 to B3)",
+      "item": [
+        {
+          "name": "B1 - Find Customers by LastName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/by-last-name?lastName=mukamana",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "by-last-name"
+              ],
+              "query": [
+                {
+                  "key": "lastName",
+                  "value": "mukamana"
+                }
+              ]
+            },
+            "description": "Requirement B1: DERIVED query by lastName (case-insensitive), sorted by firstName A to Z."
+          },
+          "response": []
+        },
+        {
+          "name": "B2 - Sim Registrations by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/by-status?status=SUBMITTED",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "by-status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SUBMITTED"
+                }
+              ]
+            },
+            "description": "Requirement B2: DERIVED query returning registrations with status SUBMITTED, earliest registrationDate first."
+          },
+          "response": []
+        },
+        {
+          "name": "B3 - Sim Registrations in Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/between?start=2026-10-01&end=2026-10-31",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "between"
+              ],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "2026-10-01"
+                },
+                {
+                  "key": "end",
+                  "value": "2026-10-31"
+                }
+              ]
+            },
+            "description": "Requirement B3: DERIVED query between dates inclusive, ordered by registrationDate."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Part C - JPQL with Joins (C1 to C4)",
+      "item": [
+        {
+          "name": "C1 - Registration Agents by SimType",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/by-sim-type?name=prepaid",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "by-sim-type"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "prepaid"
+                }
+              ]
+            },
+            "description": "Requirement C1: JPQL JOIN query on many-to-many simTypes list matching name case-insensitively."
+          },
+          "response": []
+        },
+        {
+          "name": "C2 - Free Service Desks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/service-desks/free",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "service-desks",
+                "free"
+              ]
+            },
+            "description": "Requirement C2: JPQL query returning desks unoccupied by any agent, sorted by deskNumber ASC."
+          },
+          "response": []
+        },
+        {
+          "name": "C3 - Sim Types Nobody Holds",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-types/unused",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-types",
+                "unused"
+              ]
+            },
+            "description": "Requirement C3: JPQL query using IS EMPTY on agents collection, returning SIM types nobody holds (Tourist)."
+          },
+          "response": []
+        },
+        {
+          "name": "C4 - Customers of Registration Agent",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/of-registration-agent/02d6eab6-c7af-47ac-a00f-a32c3d405b8f",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "of-registration-agent",
+                "02d6eab6-c7af-47ac-a00f-a32c3d405b8f"
+              ]
+            },
+            "description": "Requirement C4: JPQL DISTINCT query returning customers registered with this agent. Replace with agent UUID from GET /api/registration-agents/all."
+          },
+          "response": []
+        },
+        {
+          "name": "C4 - Customers of Agent Unknown (404 Error)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/customers/of-registration-agent/00000000-0000-0000-0000-000000000000",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "customers",
+                "of-registration-agent",
+                "00000000-0000-0000-0000-000000000000"
+              ]
+            },
+            "description": "Demonstrates 404 Not Found error response: The registration agent with that id does not exist."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Part D - Business Rules (D1 to D4)",
+      "item": [
+        {
+          "name": "D1 - Safe Saving (Success 201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"registrationDate\": \"2026-11-28\",\n    \"simNumber\": \"0788334455\",\n    \"status\": \"APPROVED\",\n    \"customer\": {\n        \"id\": \"04502367-a518-498d-bd23-6c4c622a5afa\"\n    },\n    \"agent\": {\n        \"id\": \"02d6eab6-c7af-47ac-a00f-a32c3d405b8f\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "save"
+              ]
+            },
+            "description": "Requirement D1: Safe saving forces status to SUBMITTED even if APPROVED is passed. Replace customer and agent UUIDs."
+          },
+          "response": []
+        },
+        {
+          "name": "D1 - Safe Saving Past Date (400 Error)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"registrationDate\": \"2025-01-01\",\n    \"simNumber\": \"0788334455\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "save"
+              ]
+            },
+            "description": "Demonstrates 400 Bad Request error: Sim registration date cannot be in the past."
+          },
+          "response": []
+        },
+        {
+          "name": "D1 - Safe Saving Agent Already Has Review (409 Error)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"registrationDate\": \"2026-11-02\",\n    \"simNumber\": \"0788778899\",\n    \"agent\": {\n        \"id\": \"02d6eab6-c7af-47ac-a00f-a32c3d405b8f\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/save",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "save"
+              ]
+            },
+            "description": "Demonstrates 409 Conflict error: Agent already has a registration to review on that date."
+          },
+          "response": []
+        },
+        {
+          "name": "D2 - Status Flow Update (Success 200)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/0c6c5968-3bc3-4644-a2cd-002b35edbd19/status?status=UNDER_REVIEW",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "0c6c5968-3bc3-4644-a2cd-002b35edbd19",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "UNDER_REVIEW"
+                }
+              ]
+            },
+            "description": "Requirement D2: Moves status from SUBMITTED to UNDER_REVIEW. Replace UUID from GET /api/sim-registrations/by-status?status=SUBMITTED."
+          },
+          "response": []
+        },
+        {
+          "name": "D2 - Status Flow Invalid Move (400 Error)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/0c6c5968-3bc3-4644-a2cd-002b35edbd19/status?status=SUBMITTED",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "0c6c5968-3bc3-4644-a2cd-002b35edbd19",
+                "status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SUBMITTED"
+                }
+              ]
+            },
+            "description": "Demonstrates 400 Bad Request error: Cannot change status from APPROVED to SUBMITTED."
+          },
+          "response": []
+        },
+        {
+          "name": "D3 - Add SimType to Agent (Success 200)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/02d6eab6-c7af-47ac-a00f-a32c3d405b8f/sim-types/2647ad6e-394f-45b3-ba7a-0cac0586fff6",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "02d6eab6-c7af-47ac-a00f-a32c3d405b8f",
+                "sim-types",
+                "2647ad6e-394f-45b3-ba7a-0cac0586fff6"
+              ]
+            },
+            "description": "Requirement D3: Adds SimType to agent. Replace agent UUID from GET /api/registration-agents/all and SimType UUID from GET /api/sim-types/all."
+          },
+          "response": []
+        },
+        {
+          "name": "D3 - Add SimType Conflict (409 Error)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/02d6eab6-c7af-47ac-a00f-a32c3d405b8f/sim-types/2647ad6e-394f-45b3-ba7a-0cac0586fff6",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "02d6eab6-c7af-47ac-a00f-a32c3d405b8f",
+                "sim-types",
+                "2647ad6e-394f-45b3-ba7a-0cac0586fff6"
+              ]
+            },
+            "description": "Demonstrates 409 Conflict error: The registration agent already has that sim type."
+          },
+          "response": []
+        },
+        {
+          "name": "D4 - Move Agent Service Desk (Success 200)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/{{REPLACE_WITH_AGENT_UUID_FROM_GET_registration_agents_all}}/service-desk?deskNumber=4",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "{{REPLACE_WITH_AGENT_UUID_FROM_GET_registration_agents_all}}",
+                "service-desk"
+              ],
+              "query": [
+                {
+                  "key": "deskNumber",
+                  "value": "4"
+                }
+              ]
+            },
+            "description": "Requirement D4: Reassigns agent to free desk 4. Replace agent UUID from GET /api/registration-agents/all."
+          },
+          "response": []
+        },
+        {
+          "name": "D4 - Move Agent Desk Taken (409 Error)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/registration-agents/02d6eab6-c7af-47ac-a00f-a32c3d405b8f/service-desk?deskNumber=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "registration-agents",
+                "02d6eab6-c7af-47ac-a00f-a32c3d405b8f",
+                "service-desk"
+              ],
+              "query": [
+                {
+                  "key": "deskNumber",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Demonstrates 409 Conflict error: That service desk is taken by another registration agent."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Part E - VerifiedDocument Entity (E1 to E3)",
+      "item": [
+        {
+          "name": "E1 - Write Verified Document (Success 201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"documentType\": \"National ID\",\n    \"remarks\": \"Photo matches the customer\",\n    \"pages\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/verified-documents/save?simRegistrationId=0c6c5968-3bc3-4644-a2cd-002b35edbd19",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "verified-documents",
+                "save"
+              ],
+              "query": [
+                {
+                  "key": "simRegistrationId",
+                  "value": "0c6c5968-3bc3-4644-a2cd-002b35edbd19"
+                }
+              ]
+            },
+            "description": "Requirement E1: Writes verified document for an APPROVED registration. Replace simRegistrationId with UUID from GET /api/sim-registrations/by-status?status=APPROVED."
+          },
+          "response": []
+        },
+        {
+          "name": "E1 - Write Document Non-Approved (400 Error)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"documentType\": \"National ID\",\n    \"remarks\": \"Test non approved\",\n    \"pages\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/verified-documents/save?simRegistrationId=3f9abf81-96d4-4796-889d-a294c39ba19f",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "verified-documents",
+                "save"
+              ],
+              "query": [
+                {
+                  "key": "simRegistrationId",
+                  "value": "3f9abf81-96d4-4796-889d-a294c39ba19f"
+                }
+              ]
+            },
+            "description": "Demonstrates 400 Bad Request error: Verified documents are only for APPROVED sim registrations. Replace with SUBMITTED registration UUID."
+          },
+          "response": []
+        },
+        {
+          "name": "E2 - Verified Document History of Customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/verified-documents/customer/1199880012345678",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "verified-documents",
+                "customer",
+                "1199880012345678"
+              ]
+            },
+            "description": "Requirement E2: JPQL query returning all verified documents of customer by nationalId, newest verifiedDate first."
+          },
+          "response": []
+        },
+        {
+          "name": "E3 - Delete Verified Document (Success 200)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/verified-documents/delete/fe7e05f3-0f63-4721-8ceb-5ed6a7e6ca66",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "verified-documents",
+                "delete",
+                "fe7e05f3-0f63-4721-8ceb-5ed6a7e6ca66"
+              ]
+            },
+            "description": "Requirement E3: Deletes verified document. Replace with document UUID from GET /api/verified-documents/all."
+          },
+          "response": []
+        },
+        {
+          "name": "APPROVED registration",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/sim-registrations/by-status?status=APPROVED",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "sim-registrations",
+                "by-status"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "APPROVED"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "ALLVerified Doc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/verified-documents/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "verified-documents",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Part F - Reports & Bulk Updates (F1 to F2)",
+      "item": [
+        {
+          "name": "F1 - Sim Registrations Stats by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/stats/by-status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "stats",
+                "by-status"
+              ]
+            },
+            "description": "Requirement F1: JPQL GROUP BY COUNT query returning list of statuses and their counts."
+          },
+          "response": []
+        },
+        {
+          "name": "F2 - Cancel Day Sim Registrations",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/cancel-day?registrationAgentId=02d6eab6-c7af-47ac-a00f-a32c3d405b8f&date=2026-10-20",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "cancel-day"
+              ],
+              "query": [
+                {
+                  "key": "registrationAgentId",
+                  "value": "02d6eab6-c7af-47ac-a00f-a32c3d405b8f"
+                },
+                {
+                  "key": "date",
+                  "value": "2026-10-20"
+                }
+              ]
+            },
+            "description": "Requirement F2: Bulk cancels agent's registrations on date to REJECTED (skipping APPROVED). Replace agent UUID from GET /api/registration-agents/all."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bonus - Dashboard & Pagination (+10 Marks)",
+      "item": [
+        {
+          "name": "Bonus - Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "summary"
+              ]
+            },
+            "description": "Bonus +5: Returns JSON dashboard summary map with customers, agents, freeDesks, registrationsToday, submitted, documents."
+          },
+          "response": []
+        },
+        {
+          "name": "Bonus - Sim Registrations Page by Page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/sim-registrations/page?page=0&size=5&sort=registrationDate,desc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "sim-registrations",
+                "page"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                },
+                {
+                  "key": "sort",
+                  "value": "registrationDate,desc"
+                }
+              ]
+            },
+            "description": "Bonus +5: Returns paginated Page<SimRegistration> with content, totalElements, and totalPages."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "REPLACE_WITH_UUID_FROM_GET_sim_types_all",
+      "value": "5394a3f5-b049-492f-bd98-5536f16ad5db"
+    },
+    {
+      "key": "REPLACE_WITH_UUID_FROM_GET_service_desks_all",
+      "value": "22222222-2222-2222-2222-222222222201"
+    },
+    {
+      "key": "REPLACE_WITH_AGENT_UUID_FROM_GET_registration_agents_all",
+      "value": "33333333-3333-3333-3333-333333333301"
+    },
+    {
+      "key": "REPLACE_WITH_CUSTOMER_UUID_FROM_GET_customers_all",
+      "value": "44444444-4444-4444-4444-444444444401"
+    },
+    {
+      "key": "REPLACE_WITH_SUBMITTED_REGISTRATION_UUID_FROM_GET_sim_registrations_all",
+      "value": "55555555-5555-5555-5555-555555555502"
+    },
+    {
+      "key": "REPLACE_WITH_APPROVED_REGISTRATION_UUID_FROM_GET_sim_registrations_all",
+      "value": "55555555-5555-5555-5555-555555555503"
+    },
+    {
+      "key": "REPLACE_WITH_REGISTRATION_UUID_THAT_HAS_DOCUMENTS",
+      "value": "55555555-5555-5555-5555-555555555504"
+    },
+    {
+      "key": "REPLACE_WITH_DOCUMENT_UUID_FROM_GET_verified_documents_all",
+      "value": "66666666-6666-6666-6666-666666666601"
+    },
+    {
+      "key": "customerNationalId",
+      "value": "1199880012345678"
+    }
+  ]
+}
